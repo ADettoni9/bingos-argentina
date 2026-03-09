@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Panel Admin</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .login-card__icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+        }
+
+        .login-card h1 {
+            color: #38bdf8;
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+        }
+
+        .login-card p {
+            color: #94a3b8;
+            font-size: 0.88rem;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            background: #0f172a;
+            color: #f1f5f9;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+        }
+
+        .form-group input::placeholder {
+            color: #475569;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.25);
+            margin-top: 8px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(56, 189, 248, 0.35);
+        }
+
+        .btn-login:active {
+            transform: scale(0.97);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-msg {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 16px;
+            min-height: 22px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: #64748b;
+            font-size: 0.82rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #94a3b8;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 48px;
+        }
+
+        .btn-toggle-pass {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 1.15rem;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+        .btn-toggle-pass:hover {
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="login-card__icon">🔐</div>
+        <h1>Panel Admin</h1>
+        <p>Ingresá tus credenciales para acceder</p>
+
+        <form id="form-login">
+            <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" placeholder="Tu usuario" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <div class="password-wrapper">
+                    <input type="password" id="contrasena" placeholder="Tu contraseña" required autocomplete="current-password">
+                    <button type="button" class="btn-toggle-pass" id="btn-toggle-pass" title="Mostrar contraseña">👁</button>
+                </div>
+            </div>
+            <button type="submit" class="btn-login" id="btn-login">Iniciar Sesión</button>
+            <p class="error-msg" id="error-msg"></p>
+        </form>
+
+        <a href="index.html" class="back-link">← Volver al inicio</a>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://yahmwegfxskynhxepplk.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_zVQyIDj8cvXw8b8Aq1uYGw_VIkF8MMW';
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Toggle mostrar/ocultar contraseña
+        document.getElementById('btn-toggle-pass').addEventListener('click', () => {
+            const input = document.getElementById('contrasena');
+            const btn   = document.getElementById('btn-toggle-pass');
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+                btn.title = 'Ocultar contraseña';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁';
+                btn.title = 'Mostrar contraseña';
+            }
+        });
+
+        // Si ya está logueado, redirigir directo al panel
+        if (sessionStorage.getItem('admin_logueado') === 'true') {
+            window.location.href = 'admin.html';
+        }
+
+        document.getElementById('form-login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const usuario    = document.getElementById('usuario').value.trim();
+            const contrasena = document.getElementById('contrasena').value.trim();
+            const errorMsg   = document.getElementById('error-msg');
+            const btnLogin   = document.getElementById('btn-login');
+
+            if (!usuario || !contrasena) return;
+
+            errorMsg.textContent = '';
+            btnLogin.disabled = true;
+            btnLogin.textContent = 'Verificando...';
+
+            try {
+                const { data, error } = await db
+                    .from('admins')
+                    .select('*')
+                    .eq('usuario', usuario)
+                    .eq('contrasena', contrasena)
+                    .single();
+
+                if (error || !data) {
+                    errorMsg.textContent = 'Usuario o contraseña incorrectos.';
+                    btnLogin.disabled = false;
+                    btnLogin.textContent = 'Iniciar Sesión';
+                    return;
+                }
+
+                // Login exitoso: guardar en sessionStorage y redirigir
+                sessionStorage.setItem('admin_logueado', 'true');
+                window.location.href = 'admin.html';
+
+            } catch (err) {
+                console.error('Error de login:', err);
+                errorMsg.textContent = 'Error de conexión. Intentá de nuevo.';
+                btnLogin.disabled = false;
+                btnLogin.textContent = 'Iniciar Sesión';
+            }
+        });
+    </script>
+
+</body>
+</html>

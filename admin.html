@@ -114,7 +114,10 @@
 <div class="container">
     <div class="header">
         <h1>Panel de Administración</h1>
-        <a href="index.html" class="btn-volver">← Volver al Inicio</a>
+        <div style="display:flex; gap:12px; align-items:center;">
+            <a href="index.html" class="btn-volver">← Volver al Inicio</a>
+            <a href="#" class="btn-volver" id="btn-logout" style="border-color:#f87171; color:#f87171;">Cerrar Sesión</a>
+        </div>
     </div>
 
     <div class="stats-grid">
@@ -153,6 +156,18 @@
 </div>
 
 <script>
+    // ========== Auth Guard ==========
+    if (sessionStorage.getItem('admin_logueado') !== 'true') {
+        window.location.href = 'login.html';
+    }
+
+    // ========== Logout ==========
+    document.getElementById('btn-logout').addEventListener('click', (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem('admin_logueado');
+        window.location.href = 'login.html';
+    });
+
     // Inicializamos Supabase con tus credenciales
     const SUPABASE_URL = 'https://yahmwegfxskynhxepplk.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_zVQyIDj8cvXw8b8Aq1uYGw_VIkF8MMW';
