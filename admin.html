@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Bingos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* Estética oscura y moderna */
+        body {
+            background-color: #0b0f19;
+            color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #38bdf8;
+            margin: 0;
+        }
+        .btn-volver {
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            transition: all 0.3s ease;
+        }
+        .btn-volver:hover {
+            background-color: #334155;
+        }
+        /* Tarjetas de estadísticas */
+        .stats-grid {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            flex: 1;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .stat-card h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #34d399;
+        }
+        .stat-card p {
+            margin: 5px 0 0 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        /* Tabla de ventas */
+        .table-container {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #334155;
+        }
+        th {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background-color: #0f172a;
+        }
+        .estado-pendiente {
+            color: #fbbf24;
+            font-weight: bold;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        .estado-pagado {
+            color: #34d399;
+            font-weight: bold;
+            background: rgba(52, 211, 153, 0.1);
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Panel de Administración</h1>
+        <a href="index.html" class="btn-volver">← Volver al Inicio</a>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2 id="total-ventas">0</h2>
+            <p>Total Ventas</p>
+        </div>
+        <div class="stat-card">
+            <h2 id="total-pagados" style="color: #34d399;">0</h2>
+            <p>Pagados</p>
+        </div>
+        <div class="stat-card">
+            <h2 id="total-pendientes" style="color: #fbbf24;">0</h2>
+            <p>Pendientes</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Sorteo</th>
+                    <th>Nº Cartón</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-ventas">
+                <tr>
+                    <td colspan="5" style="text-align:center; color: #94a3b8;">Cargando base de datos...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Inicializamos Supabase con tus credenciales
+    const SUPABASE_URL = 'https://yahmwegfxskynhxepplk.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_zVQyIDj8cvXw8b8Aq1uYGw_VIkF8MMW';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function cargarVentas() {
+        try {
+            // Hacemos un JOIN a las tablas clientes y sorteos para traer los nombres
+            const { data: ventas, error } = await db
+                .from('ventas')
+                .select('id_venta, numero_carton, estado, clientes(nombre), sorteos(nombre_bingo)')
+                .order('id_venta', { ascending: false });
+
+            if (error) throw error;
+
+            const tbody = document.getElementById('tabla-ventas');
+            tbody.innerHTML = '';
+
+            let contTotal = 0;
+            let contPagados = 0;
+            let contPendientes = 0;
+
+            if (ventas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #94a3b8;">Todavía no hay ventas registradas.</td></tr>';
+                return;
+            }
+
+            // Recorremos las ventas y armamos la tabla
+            ventas.forEach(venta => {
+                contTotal++;
+                if (venta.estado === 'Pagado') contPagados++;
+                else contPendientes++;
+
+                // Extraemos los datos del JOIN
+                const nombreCliente = venta.clientes ? venta.clientes.nombre : 'Desconocido';
+                const nombreSorteo = venta.sorteos ? venta.sorteos.nombre_bingo : 'Desconocido';
+                const claseEstado = venta.estado === 'Pendiente' ? 'estado-pendiente' : 'estado-pagado';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>#${venta.id_venta}</td>
+                        <td>${nombreCliente}</td>
+                        <td>${nombreSorteo}</td>
+                        <td><strong>${venta.numero_carton}</strong></td>
+                        <td><span class="${claseEstado}">${venta.estado}</span></td>
+                    </tr>
+                `;
+            });
+
+            // Actualizamos los contadores de arriba
+            document.getElementById('total-ventas').innerText = contTotal;
+            document.getElementById('total-pagados').innerText = contPagados;
+            document.getElementById('total-pendientes').innerText = contPendientes;
+
+        } catch (error) {
+            console.error('Error al cargar el panel:', error);
+            document.getElementById('tabla-ventas').innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ef4444;">Error de conexión. Revisá la consola.</td></tr>`;
+        }
+    }
+
+    // Ejecutamos la función apenas carga la página
+    document.addEventListener('DOMContentLoaded', cargarVentas);
+</script>
+
+</body>
+</html>

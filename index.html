@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprá tu cartón de bingo online. Super Bingo del Pescador y más sorteos disponibles.">
+    <title>Bingos Online — Comprá tu cartón</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header__inner">
+            <div class="header__logo">
+                <a href="index.html" class="logo-interactivo">
+                    <img src="src/fotoperfil.png" alt="Foto de perfil" class="foto-perfil">
+                    <span class="header__brand">Bingos.Argentina</span>
+                </a>
+            </div>
+            <nav class="header__nav">
+                <a href="#disponible" class="header__link">Sorteo Activo</a>
+                <a href="#proximos" class="header__link">Próximos</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero__inner">
+            <p class="hero__badge">🔥 Sorteo en vivo próximamente</p>
+            <h1 class="hero__title">Comprá tu cartón<br>y ganá <span class="hero__accent">grandes premios</span></h1>
+            <p class="hero__subtitle">La manera más fácil de participar en los mejores bingos. Elegí tu cartón, pagá por WhatsApp y ¡a jugar!</p>
+            <a href="#disponible" class="hero__cta">Ver Sorteo Disponible ↓</a>
+        </div>
+        <div class="hero__blob hero__blob--1"></div>
+        <div class="hero__blob hero__blob--2"></div>
+        <div class="hero__blob hero__blob--3"></div>
+    </section>
+
+    <section id="disponible" class="section">
+        <div class="container">
+            <h2 class="section__title">Bingo Disponible</h2>
+            <p class="section__subtitle">¡Este sorteo está abierto! Asegurá tu cartón ahora.</p>
+
+            <div class="cards cards--center">
+                <article class="card card--active card--featured" id="card-bingo-pescador">
+                    <div class="card__ribbon">EN VENTA</div>
+                    <div class="card__cover">
+                        <img src="src/portada.png" alt="Portada del Super Bingo del Pescador" class="card__cover-img">
+                    </div>
+                    <h3 class="card__title">Super Bingo del Pescador</h3>
+                    <p class="card__price">$165.000</p>
+                    <p class="card__desc">Grandes premios te esperan. ¡No te lo pierdas!</p>
+
+                    <div class="premios">
+                        <h4 class="premios__title">🏆 Premios Destacados</h4>
+                        <div class="premios__grid">
+                            <div class="premios__item">
+                                <img src="src/premios1.png" alt="Premio 1" class="premios__img">
+                            </div>
+                            <div class="premios__item">
+                                <img src="src/premios2.png" alt="Premio 2" class="premios__img">
+                            </div>
+                            <div class="premios__item">
+                                <img src="src/premios3.png" alt="Premio 3" class="premios__img">
+                            </div>
+                            <div class="premios__item">
+                                <img src="src/premios4.png" alt="Premio 4" class="premios__img">
+                            </div>
+                            <div class="premios__item">
+                                <img src="src/premios5.png" alt="Premio 5" class="premios__img">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn--buy" id="btn-comprar" data-sorteo="Super Bingo del Pescador">
+                        Comprar Cartón
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="proximos" class="section section--alt">
+        <div class="container">
+            <h2 class="section__title">Próximos Sorteos</h2>
+            <p class="section__subtitle">Estos bingos todavía no están disponibles. ¡Volvé pronto!</p>
+
+            <div class="cards">
+                <article class="card card--disabled">
+                    <div class="card__ribbon card__ribbon--soon">PRÓXIMAMENTE</div>
+                    <div class="card__icon">⛪</div>
+                    <h3 class="card__title">Bingo San Vicente</h3>
+                    <p class="card__price">Precio a confirmar</p>
+                    <p class="card__desc">Bingo solidario a beneficio de la parroquia.</p>
+                    <button class="btn btn--disabled" disabled>No disponible</button>
+                </article>
+
+                <article class="card card--disabled">
+                    <div class="card__ribbon card__ribbon--soon">PRÓXIMAMENTE</div>
+                    <div class="card__icon">🏆</div>
+                    <h3 class="card__title">Bingo Mega Sorteo</h3>
+                    <p class="card__price">Precio a confirmar</p>
+                    <p class="card__desc">El mega sorteo con los premios más grandes del año.</p>
+                    <button class="btn btn--disabled" disabled>No disponible</button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal-compra">
+            <button class="modal__close" id="btn-cerrar-modal">&times;</button>
+            <div class="modal__icon">🎟️</div>
+            <h2 class="modal__title">Comprar Cartón</h2>
+            <p class="modal__subtitle">Super Bingo del Pescador</p>
+
+            <form id="form-compra" class="modal__form">
+                <label for="nombre" class="modal__label">Nombre Completo</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    class="modal__input"
+                    placeholder="Ej: Juan Pérez"
+                    autocomplete="name"
+                    required
+                >
+                <p class="modal__error" id="error-nombre"></p>
+
+                <label for="carton" class="modal__label">Número de Cartón</label>
+                <input
+                    type="text"
+                    id="carton"
+                    class="modal__input"
+                    placeholder="Nº de cartón que querés (Ej: 0912)"
+                    required
+                >
+
+                <button type="submit" class="btn btn--submit" id="btn-enviar">
+                    Confirmar y contactar por WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox__close" id="lightbox-close">&times;</button>
+        <img class="lightbox__img" id="lightbox-img" src="" alt="Premio ampliado">
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <a href="https://www.instagram.com/bingos.argentina/" target="_blank" class="footer__instagram">
+                📸 Seguinos en Instagram: @bingos.argentina
+            </a>
+            <p>&copy; 2026 BingosOnline — Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
