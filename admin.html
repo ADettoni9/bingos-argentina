@@ -5,182 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Bingos</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <style>
-        body {
-            background-color: #0b0f19;
-            color: #f1f5f9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        h1 {
-            color: #38bdf8;
-            margin: 0;
-        }
-        .btn-volver {
-            background-color: #1e293b;
-            color: #f8fafc;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-        }
-        .btn-volver:hover {
-            background-color: #334155;
-        }
-        .stats-grid {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background-color: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            flex: 1;
-            text-align: center;
-            border: 1px solid #334155;
-        }
-        .stat-card h2 {
-            margin: 0;
-            font-size: 2.5rem;
-            color: #34d399;
-        }
-        .stat-card p {
-            margin: 5px 0 0 0;
-            color: #94a3b8;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .table-container {
-            background-color: #1e293b;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #334155;
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-        th, td {
-            padding: 15px;
-            border-bottom: 1px solid #334155;
-        }
-        th {
-            color: #94a3b8;
-            font-weight: 600;
-        }
-        tr:last-child td {
-            border-bottom: none;
-        }
-        tr:hover td {
-            background-color: #0f172a;
-        }
-        .estado-select {
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            outline: none;
-            cursor: pointer;
-            text-align: center;
-            font-family: inherit;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-        .estado-select:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        .estado-select option {
-            background-color: #1e293b;
-            color: #f1f5f9;
-        }
-        .estado-pendiente {
-            color: #fbbf24;
-            font-weight: bold;
-            background: rgba(251, 191, 36, 0.1);
-            padding: 5px 10px;
-            border-radius: 20px;
-        }
-        .estado-pagado {
-            color: #34d399;
-            font-weight: bold;
-            background: rgba(52, 211, 153, 0.1);
-            padding: 5px 10px;
-            border-radius: 20px;
-        }
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 12px;
-        }
-        .tab-btn {
-            background: transparent;
-            color: #94a3b8;
-            border: none;
-            padding: 10px 22px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
-        .tab-btn:hover {
-            color: #f1f5f9;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .tab-btn.active {
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-        }
-        .tab-content {
-            display: none;
-        }
-        .search-bar {
-            width: 100%;
-            padding: 14px 16px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            color: #f1f5f9;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        .search-bar:focus {
-            border-color: #38bdf8;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
+
 
 <div class="container">
     <div class="header">
         <h1>Panel de Administración</h1>
-        <div style="display:flex; gap:12px; align-items:center;">
+        <div class="inline-style-5a7e6d">
             <a href="index.html" class="btn-volver">← Volver al Inicio</a>
-            <a href="#" class="btn-volver" id="btn-logout" style="border-color:#f87171; color:#f87171;">Cerrar Sesión</a>
+            <a href="#" class="btn-volver inline-style-29533b" id="btn-logout">Cerrar Sesión</a>
         </div>
     </div>
 
@@ -190,18 +26,18 @@
         <button class="tab-btn" onclick="mostrarTab('tab-bingos', this)">🎁 Bingos Activos</button>
     </div>
 
-    <div id="tab-ventas" class="tab-content" style="display:block;">
+    <div id="tab-ventas" class="tab-content inline-style-633a4e">
         <div class="stats-grid">
             <div class="stat-card">
                 <h2 id="total-ventas">0</h2>
                 <p>Total Ventas</p>
             </div>
             <div class="stat-card">
-                <h2 id="total-pagados" style="color: #34d399;">0</h2>
+                <h2 id="total-pagados" class="inline-style-6b8508">0</h2>
                 <p>Pagados</p>
             </div>
             <div class="stat-card">
-                <h2 id="total-pendientes" style="color: #fbbf24;">0</h2>
+                <h2 id="total-pendientes" class="inline-style-211cc8">0</h2>
                 <p>Pendientes</p>
             </div>
         </div>
@@ -221,7 +57,7 @@
                 </thead>
                 <tbody id="tabla-ventas">
                     <tr>
-                        <td colspan="7" style="text-align:center; color: #94a3b8;">Cargando base de datos...</td>
+                        <td colspan="7" class="inline-style-5216a6">Cargando base de datos...</td>
                     </tr>
                 </tbody>
             </table>
@@ -229,26 +65,26 @@
     </div>
 
     <div id="tab-inventario" class="tab-content">
-        <div class="carga-cartones-container" style="background-color: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; margin-bottom: 30px;">
-            <h3 style="color: #38bdf8; margin-top: 0; margin-bottom: 12px;">Carga de Cartones Físicos</h3>
-            <div style="margin-bottom: 15px;">
-                <label style="color: #94a3b8; font-size: 0.9rem; display: block; margin-bottom: 5px;">¿A qué Bingo pertenecen estos cartones?</label>
-                <select id="select-inventario-bingo" class="search-bar" style="margin-bottom: 0; padding: 10px; width: 100%; max-width: 400px; cursor: pointer;">
+        <div class="carga-cartones-container inline-style-1cd7b1">
+            <h3 class="inline-style-a9d66d">Carga de Cartones Físicos</h3>
+            <div class="inline-style-98a93c">
+                <label class="inline-style-a1d9a0">¿A qué Bingo pertenecen estos cartones?</label>
+                <select id="select-inventario-bingo" class="search-bar inline-style-485416">
                     <option value="">Cargando bingos...</option>
                 </select>
             </div>
-            <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px;">Pegá aquí los números de los cartones que tenés disponibles, separados por coma o espacio.</p>
-            <textarea id="input-cartones" rows="3" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: #f1f5f9; font-family: monospace; resize: vertical; margin-bottom: 15px;" placeholder="Ej: 0012, 0045, 0100..."></textarea>
-            <div style="display: flex; gap: 15px; align-items: center;">
-                <button id="btn-cargar-cartones" style="background: #34d399; color: #000; font-weight: bold; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#10b981'" onmouseout="this.style.background='#34d399'">Guardar Cartones Libres</button>
-                <span id="msg-carga" style="color: #34d399; font-size: 0.9rem; font-weight: bold; display: none;">¡Cartones procesados!</span>
+            <p class="inline-style-775262">Pegá aquí los números de los cartones que tenés disponibles, separados por coma o espacio.</p>
+            <textarea id="input-cartones" rows="3" class="inline-style-ca201c" placeholder="Ej: 0012, 0045, 0100..."></textarea>
+            <div class="inline-style-5525dc">
+                <button id="btn-cargar-cartones" class="inline-style-a921da" onmouseover="this.style.background='#10b981'" onmouseout="this.style.background='#34d399'">Guardar Cartones Libres</button>
+                <span id="msg-carga" class="inline-style-1839a3">¡Cartones procesados!</span>
             </div>
-            <p style="color: #94a3b8; font-size: 0.85rem; margin-top: 15px; margin-bottom: 0;">Total Histórico Creado: <strong id="total-stock-bd" style="color: #f1f5f9;">0</strong></p>
+            <p class="inline-style-0a956a">Total Histórico Creado: <strong id="total-stock-bd" class="inline-style-15f974">0</strong></p>
         </div>
 
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <input type="text" id="buscador-cartones" class="search-bar" style="margin-bottom: 0; flex: 1;" placeholder="🔍 Filtrar o buscar por número de cartón...">
-            <button type="button" onclick="cargarInventario(); actualizarStockLabel();" style="background: #1e293b; color: #f1f5f9; border: 1px solid #334155; padding: 0 20px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.2s; display: flex; align-items: center; gap: 6px;" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#1e293b'" title="Recargar la lista desde la base de datos">
+        <div class="inline-style-7c4dac">
+            <input type="text" id="buscador-cartones" class="search-bar inline-style-5ff1de" placeholder="🔍 Filtrar o buscar por número de cartón...">
+            <button type="button" onclick="cargarInventario(); actualizarStockLabel();" class="inline-style-e2fa48" onmouseover="this.style.background='#334155'" onmouseout="this.style.background='#1e293b'" title="Recargar la lista desde la base de datos">
                 🔄 Refrescar
             </button>
         </div>
@@ -265,7 +101,7 @@
                 </thead>
                 <tbody id="tabla-inventario">
                     <tr>
-                        <td colspan="4" style="text-align:center; color: #94a3b8;">Cargando inventario...</td>
+                        <td colspan="4" class="inline-style-a1ea4d">Cargando inventario...</td>
                     </tr>
                 </tbody>
             </table>
@@ -273,14 +109,14 @@
     </div>
 
     <div id="tab-bingos" class="tab-content">
-        <div class="carga-cartones-container" style="background-color: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; margin-bottom: 30px;">
-            <h3 style="color: #38bdf8; margin-top: 0; margin-bottom: 15px;">Crear Nuevo Bingo / Campaña</h3>
-            <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
-                <input type="text" id="nuevo-bingo-nombre" class="search-bar" style="margin-bottom:0; flex: 2; min-width:200px;" placeholder="Ej: Bingo Día de la Madre">
-                <input type="date" id="nuevo-bingo-fecha" class="search-bar" style="margin-bottom:0; flex: 1; min-width:150px;">
-                <input type="number" id="nuevo-bingo-precio" class="search-bar" style="margin-bottom:0; flex: 1; min-width:120px;" placeholder="Precio (Ej: 1500)">
+        <div class="carga-cartones-container inline-style-df5ad2">
+            <h3 class="inline-style-08a4d1">Crear Nuevo Bingo / Campaña</h3>
+            <div class="inline-style-2c90fa">
+                <input type="text" id="nuevo-bingo-nombre" class="search-bar inline-style-5d9308" placeholder="Ej: Bingo Día de la Madre">
+                <input type="date" id="nuevo-bingo-fecha" class="search-bar inline-style-d667d0">
+                <input type="number" id="nuevo-bingo-precio" class="search-bar inline-style-7782ce" placeholder="Precio (Ej: 1500)">
             </div>
-            <button id="btn-crear-bingo" style="background: #38bdf8; color: #000; font-weight: bold; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#0284c7'" onmouseout="this.style.background='#38bdf8'">➕ Crear Bingo</button>
+            <button id="btn-crear-bingo" class="inline-style-5c679f" onmouseover="this.style.background='#0284c7'" onmouseout="this.style.background='#38bdf8'">➕ Crear Bingo</button>
         </div>
 
         <div class="table-container">
@@ -295,7 +131,7 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-bingos">
-                    <tr><td colspan="5" style="text-align:center; color:#94a3b8;">Cargando bingos...</td></tr>
+                    <tr><td colspan="5" class="inline-style-27a519">Cargando bingos...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -424,7 +260,7 @@
             let contPendientes = 0;
 
             if (ventas.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color: #94a3b8;">Todavía no hay ventas registradas.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="inline-style-9b201f">Todavía no hay ventas registradas.</td></tr>';
                 return;
             }
 
@@ -454,7 +290,7 @@
                             </select>
                         </td>
                         <td>
-                            <button onclick="eliminarVenta(${venta.id_venta})" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 1.2rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Eliminar Venta">🗑️</button>
+                            <button onclick="eliminarVenta(${venta.id_venta})" class="inline-style-482a92" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Eliminar Venta">🗑️</button>
                         </td>
                     </tr>
                 `;
@@ -466,13 +302,13 @@
 
         } catch (error) {
             console.error('Error al cargar el panel:', error);
-            document.getElementById('tabla-ventas').innerHTML = `<tr><td colspan="5" style="text-align:center; color:#ef4444;">Error de conexión. Revisá la consola.</td></tr>`;
+            document.getElementById('tabla-ventas').innerHTML = `<tr><td colspan="5" class="inline-style-abe4ad">Error de conexión. Revisá la consola.</td></tr>`;
         }
     }
 
     async function cargarInventario() {
         const tbody = document.getElementById('tabla-inventario');
-        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: #94a3b8;">Cargando inventario...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="inline-style-208b83">Cargando inventario...</td></tr>';
         
         try {
             const { data: stock, error: errStock } = await db.from('cartones_disponibles').select('id, numero_carton, id_sorteo, sorteos(nombre_bingo)');
@@ -484,7 +320,7 @@
             const ocupados = new Set(ventas.map(v => `${v.id_sorteo}-${v.numero_carton}`));
             
             if (!stock || stock.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: #94a3b8;">El inventario está vacío.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="inline-style-0e5fa5">El inventario está vacío.</td></tr>';
                 return;
             }
             
@@ -499,13 +335,13 @@
                 const nombreSorteo = item.sorteos ? item.sorteos.nombre_bingo : `Sorteo ID ${item.id_sorteo}`;
                 
                 const btnEliminar = !esOcupado 
-                    ? `<button onclick="eliminarDeInventario(${item.id})" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 1.1rem;" title="Eliminar del inventario general">🗑️</button>`
-                    : `<span style="color:#64748b; font-size:0.8rem;">En uso actual</span>`;
+                    ? `<button onclick="eliminarDeInventario(${item.id})" class="inline-style-788b78" title="Eliminar del inventario general">🗑️</button>`
+                    : `<span class="inline-style-dfc827">En uso actual</span>`;
 
                 tbody.innerHTML += `
                     <tr class="fila-inv">
                         <td class="col-num"><strong>${num}</strong></td>
-                        <td style="color:#cbd5e1; font-size:0.9rem;">${nombreSorteo}</td>
+                        <td class="inline-style-b726cc">${nombreSorteo}</td>
                         <td><span class="${statusClass}">${status}</span></td>
                         <td>${btnEliminar}</td>
                     </tr>
@@ -513,7 +349,7 @@
             });
         } catch (error) {
             console.error(error);
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: #ef4444;">Error al cargar inventario.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="inline-style-92833a">Error al cargar inventario.</td></tr>';
         }
     }
 
@@ -541,7 +377,7 @@
             selectInv.innerHTML = '<option value="">-- Seleccionar Bingo --</option>';
 
             if (!sorteos || sorteos.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No hay sorteos creados.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="inline-style-cb50e2">No hay sorteos creados.</td></tr>';
                 return;
             }
 
@@ -552,7 +388,7 @@
                     <td><strong>${s.nombre_bingo}</strong></td>
                     <td>${s.fecha_sorteo || '-'}</td>
                     <td>$${s.precio_carton}</td>
-                    <td><button onclick="eliminarSorteo(${s.id_sorteo})" style="background:none; border:none; color:#f87171; cursor:pointer;" title="Eliminar Bingo">🗑️</button></td>
+                    <td><button onclick="eliminarSorteo(${s.id_sorteo})" class="inline-style-110bc8" title="Eliminar Bingo">🗑️</button></td>
                 `;
                 tbody.appendChild(tr);
 
