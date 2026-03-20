@@ -93,6 +93,29 @@
         tr:hover td {
             background-color: #0f172a;
         }
+        .estado-select {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+            font-family: inherit;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        .estado-select:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        .estado-select option {
+            background-color: #1e293b;
+            color: #f1f5f9;
+        }
         .estado-pendiente {
             color: #fbbf24;
             font-weight: bold;
@@ -144,11 +167,12 @@
                     <th>Sorteo</th>
                     <th>Nº Cartón</th>
                     <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-ventas">
                 <tr>
-                    <td colspan="5" style="text-align:center; color: #94a3b8;">Cargando base de datos...</td>
+                    <td colspan="6" style="text-align:center; color: #94a3b8;">Cargando base de datos...</td>
                 </tr>
             </tbody>
         </table>
@@ -173,6 +197,48 @@
     const SUPABASE_ANON_KEY = 'sb_publishable_zVQyIDj8cvXw8b8Aq1uYGw_VIkF8MMW';
     const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+    async function cambiarEstado(idVenta, nuevoEstado) {
+        try {
+            // Actualización optimista visual
+            const selectElement = document.querySelector(`select[onchange="cambiarEstado(${idVenta}, this.value)"]`);
+            if (selectElement) {
+                selectElement.className = `estado-select ${nuevoEstado === 'Pendiente' ? 'estado-pendiente' : 'estado-pagado'}`;
+            }
+
+            const { error } = await db
+                .from('ventas')
+                .update({ estado: nuevoEstado })
+                .eq('id_venta', idVenta);
+
+            if (error) throw error;
+            
+            // Recargar datos y contadores tras éxito
+            cargarVentas();
+        } catch (error) {
+            console.error('Error al actualizar el estado:', error);
+            alert('Falló el cambio de estado. Por favor, intentá de nuevo.');
+            cargarVentas(); // Revertir visualmente en caso de error
+        }
+    }
+
+    async function eliminarVenta(idVenta) {
+        if (!confirm('¿Seguro que querés eliminar esta venta? El número de cartón volverá a estar disponible.')) return;
+        
+        try {
+            const { error } = await db
+                .from('ventas')
+                .delete()
+                .eq('id_venta', idVenta);
+
+            if (error) throw error;
+            
+            cargarVentas(); // Recargar tras eliminar
+        } catch (error) {
+            console.error('Error al eliminar la venta:', error);
+            alert('Falló al eliminar. Intentá nuevamente.');
+        }
+    }
+
     async function cargarVentas() {
         try {
             // Hacemos un JOIN a las tablas clientes y sorteos para traer los nombres
@@ -191,7 +257,7 @@
             let contPendientes = 0;
 
             if (ventas.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: #94a3b8;">Todavía no hay ventas registradas.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: #94a3b8;">Todavía no hay ventas registradas.</td></tr>';
                 return;
             }
 
@@ -205,6 +271,8 @@
                 const nombreCliente = venta.clientes ? venta.clientes.nombre : 'Desconocido';
                 const nombreSorteo = venta.sorteos ? venta.sorteos.nombre_bingo : 'Desconocido';
                 const claseEstado = venta.estado === 'Pendiente' ? 'estado-pendiente' : 'estado-pagado';
+                const selectedPendiente = venta.estado === 'Pendiente' ? 'selected' : '';
+                const selectedPagado = venta.estado === 'Pagado' ? 'selected' : '';
 
                 tbody.innerHTML += `
                     <tr>
@@ -212,7 +280,15 @@
                         <td>${nombreCliente}</td>
                         <td>${nombreSorteo}</td>
                         <td><strong>${venta.numero_carton}</strong></td>
-                        <td><span class="${claseEstado}">${venta.estado}</span></td>
+                        <td>
+                            <select class="estado-select ${claseEstado}" onchange="cambiarEstado(${venta.id_venta}, this.value)">
+                                <option value="Pendiente" ${selectedPendiente}>Pendiente</option>
+                                <option value="Pagado" ${selectedPagado}>Pagado</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button onclick="eliminarVenta(${venta.id_venta})" style="background: none; border: none; color: #f87171; cursor: pointer; font-size: 1.2rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'" title="Eliminar Venta">🗑️</button>
+                        </td>
                     </tr>
                 `;
             });

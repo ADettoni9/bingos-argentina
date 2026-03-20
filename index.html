@@ -127,6 +127,9 @@
                     class="modal__input"
                     placeholder="Ej: Juan Pérez"
                     autocomplete="name"
+                    maxlength="30"
+                    pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
+                    title="Solo se permiten letras y espacios."
                     required
                 >
                 <p class="modal__error" id="error-nombre"></p>
@@ -137,6 +140,10 @@
                     id="carton"
                     class="modal__input"
                     placeholder="Nº de cartón que querés (Ej: 0912)"
+                    maxlength="4"
+                    minlength="4"
+                    pattern="[0-9]{4}"
+                    title="Debe ingresar exactamente 4 números."
                     required
                 >
 

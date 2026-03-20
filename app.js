@@ -33,6 +33,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ========== Validación de Nombre ==========
+    const inputNombre = document.getElementById('nombre');
+    if (inputNombre) {
+        inputNombre.addEventListener('input', function(e) {
+            // Elimina números y caracteres especiales, permitiendo solo letras y espacios
+            this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+        });
+    }
+
+    // ========== Validación de Cartón ==========
+    const inputCarton = document.getElementById('carton');
+    if (inputCarton) {
+        inputCarton.addEventListener('input', function(e) {
+            // Elimina letras y caracteres especiales, permitiendo solo números
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
+
     // ========== Formulario de Compra ==========
     if(formCompra) {
         formCompra.addEventListener('submit', async (e) => {
