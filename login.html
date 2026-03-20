@@ -191,7 +191,6 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_zVQyIDj8cvXw8b8Aq1uYGw_VIkF8MMW';
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Toggle mostrar/ocultar contraseña
         document.getElementById('btn-toggle-pass').addEventListener('click', () => {
             const input = document.getElementById('contrasena');
             const btn   = document.getElementById('btn-toggle-pass');
@@ -206,7 +205,6 @@
             }
         });
 
-        // Si ya está logueado, redirigir directo al panel
         if (sessionStorage.getItem('admin_logueado') === 'true') {
             window.location.href = 'admin.html';
         }
@@ -240,7 +238,6 @@
                     return;
                 }
 
-                // Login exitoso: guardar en sessionStorage y redirigir
                 sessionStorage.setItem('admin_logueado', 'true');
                 window.location.href = 'admin.html';
 

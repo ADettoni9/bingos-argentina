@@ -23,92 +23,50 @@
                 </a>
             </div>
             <nav class="header__nav">
-                <a href="#disponible" class="header__link">Sorteo Activo</a>
-                <a href="#proximos" class="header__link">Próximos</a>
+                <a href="#disponible" class="header__link">Bingos Activos</a>
+                <a href="#contacto" class="header__link">Contacto</a>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
+    <section class="hero" style="padding-bottom: 2rem;">
         <div class="container hero__inner">
-            <p class="hero__badge">🔥 Sorteo en vivo próximamente</p>
             <h1 class="hero__title">Comprá tu cartón<br>y ganá <span class="hero__accent">grandes premios</span></h1>
-            <p class="hero__subtitle">La manera más fácil de participar en los mejores bingos. Elegí tu cartón, pagá por WhatsApp y ¡a jugar!</p>
-            <a href="#disponible" class="hero__cta">Ver Sorteo Disponible ↓</a>
+            <p class="hero__subtitle">La manera más fácil de participar en los mejores bingos de la región. Elegí tu bingo, pagá rápido por WhatsApp y ¡a jugar!</p>
         </div>
         <div class="hero__blob hero__blob--1"></div>
         <div class="hero__blob hero__blob--2"></div>
         <div class="hero__blob hero__blob--3"></div>
     </section>
 
-    <section id="disponible" class="section">
+    <section id="disponible" class="section" style="padding-top: 2rem;">
         <div class="container">
-            <h2 class="section__title">Bingo Disponible</h2>
-            <p class="section__subtitle">¡Este sorteo está abierto! Asegurá tu cartón ahora.</p>
-
-            <div class="cards cards--center">
-                <article class="card card--active card--featured" id="card-bingo-pescador">
-                    <div class="card__ribbon">EN VENTA</div>
-                    <div class="card__cover">
-                        <img src="src/portada.png" alt="Portada del Super Bingo del Pescador" class="card__cover-img">
-                    </div>
-                    <h3 class="card__title">Super Bingo del Pescador</h3>
-                    <p class="card__price">$165.000</p>
-                    <p class="card__desc">Grandes premios te esperan. ¡No te lo pierdas!</p>
-
-                    <div class="premios">
-                        <h4 class="premios__title">🏆 Premios Destacados</h4>
-                        <div class="premios__grid">
-                            <div class="premios__item">
-                                <img src="src/premios1.png" alt="Premio 1" class="premios__img">
-                            </div>
-                            <div class="premios__item">
-                                <img src="src/premios2.png" alt="Premio 2" class="premios__img">
-                            </div>
-                            <div class="premios__item">
-                                <img src="src/premios3.png" alt="Premio 3" class="premios__img">
-                            </div>
-                            <div class="premios__item">
-                                <img src="src/premios4.png" alt="Premio 4" class="premios__img">
-                            </div>
-                            <div class="premios__item">
-                                <img src="src/premios5.png" alt="Premio 5" class="premios__img">
-                            </div>
-                        </div>
-                    </div>
-
-                    <button class="btn btn--buy" id="btn-comprar" data-sorteo="Super Bingo del Pescador">
-                        Comprar Cartón
-                    </button>
-                </article>
+            <div id="bingos-activos" class="cards" style="width: 100%; margin-top:20px;">
+                <p style="text-align:center; color:#94a3b8; width: 100%;">Buscando bingos disponibles en la base de datos...</p>
             </div>
         </div>
     </section>
 
-    <section id="proximos" class="section section--alt">
-        <div class="container">
-            <h2 class="section__title">Próximos Sorteos</h2>
-            <p class="section__subtitle">Estos bingos todavía no están disponibles. ¡Volvé pronto!</p>
+    <section id="contacto" class="section section--alt">
+        <div class="container" style="text-align:center;">
+            <h2 class="section__title">¿Tenés alguna duda?</h2>
+            <p class="section__subtitle" style="margin-bottom:40px;">Escribinos y te respondemos a la brevedad por WhatsApp.</p>
 
-            <div class="cards">
-                <article class="card card--disabled">
-                    <div class="card__ribbon card__ribbon--soon">PRÓXIMAMENTE</div>
-                    <div class="card__icon">⛪</div>
-                    <h3 class="card__title">Bingo San Vicente</h3>
-                    <p class="card__price">Precio a confirmar</p>
-                    <p class="card__desc">Bingo solidario a beneficio de la parroquia.</p>
-                    <button class="btn btn--disabled" disabled>No disponible</button>
-                </article>
+            <form id="form-contacto" style="max-width: 500px; margin: 0 auto; background: rgba(30, 41, 59, 0.7); padding: 35px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div style="margin-bottom: 20px;">
+                    <label for="contacto-nombre" class="modal__label" style="display:block; text-align:left; color:#cbd5e1; font-size:1rem; margin-bottom:8px;">1. Tu Nombre</label>
+                    <input type="text" id="contacto-nombre" class="modal__input" style="width:100%; border-radius:10px; padding:16px;" placeholder="Ej: Juan Pérez" required>
+                </div>
 
-                <article class="card card--disabled">
-                    <div class="card__ribbon card__ribbon--soon">PRÓXIMAMENTE</div>
-                    <div class="card__icon">🏆</div>
-                    <h3 class="card__title">Bingo Mega Sorteo</h3>
-                    <p class="card__price">Precio a confirmar</p>
-                    <p class="card__desc">El mega sorteo con los premios más grandes del año.</p>
-                    <button class="btn btn--disabled" disabled>No disponible</button>
-                </article>
-            </div>
+                <div style="margin-bottom: 30px;">
+                    <label for="contacto-mensaje" class="modal__label" style="display:block; text-align:left; color:#cbd5e1; font-size:1rem; margin-bottom:8px;">2. Tu Consulta</label>
+                    <textarea id="contacto-mensaje" class="modal__input" style="width:100%; min-height: 120px; resize: vertical; font-family:inherit; padding: 16px; border-radius:10px;" placeholder="Escribí acá en qué podemos ayudarte..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn--submit" style="width: 100%; padding: 18px; font-size: 1.1rem; border-radius: 10px;">
+                    💬 Enviar Consulta por WhatsApp
+                </button>
+            </form>
         </div>
     </section>
 
@@ -116,16 +74,19 @@
         <div class="modal" id="modal-compra">
             <button class="modal__close" id="btn-cerrar-modal">&times;</button>
             <div class="modal__icon">🎟️</div>
-            <h2 class="modal__title">Comprar Cartón</h2>
-            <p class="modal__subtitle">Super Bingo del Pescador</p>
+            <h2 class="modal__title">Comprando Cartón</h2>
+            <p class="modal__subtitle" id="modal-subtitle-bingo" style="font-weight: bold; color: var(--accent-green);">Cargando...</p>
 
             <form id="form-compra" class="modal__form">
-                <label for="nombre" class="modal__label">Nombre Completo</label>
+                <input type="hidden" id="id_sorteo_activo">
+                <input type="hidden" id="nombre_sorteo_activo">
+
+                <label for="nombre" class="modal__label">Paso 1: ¿Cómo te llamás?</label>
+                <span class="modal__helper">Escribí tu nombre y apellido (Solo letras)</span>
                 <input
                     type="text"
                     id="nombre"
                     class="modal__input"
-                    placeholder="Ej: Juan Pérez"
                     autocomplete="name"
                     maxlength="30"
                     pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+"
@@ -134,21 +95,33 @@
                 >
                 <p class="modal__error" id="error-nombre"></p>
 
-                <label for="carton" class="modal__label">Número de Cartón</label>
+                <label for="dni" class="modal__label">Paso 2: ¿Cuál es tu DNI?</label>
+                <span class="modal__helper">Ingresá tu DNI sin puntos (8 números).</span>
                 <input
                     type="text"
-                    id="carton"
+                    id="dni"
                     class="modal__input"
-                    placeholder="Nº de cartón que querés (Ej: 0912)"
-                    maxlength="4"
-                    minlength="4"
-                    pattern="[0-9]{4}"
-                    title="Debe ingresar exactamente 4 números."
+                    maxlength="8"
+                    minlength="8"
+                    pattern="[0-9]{8}"
+                    title="Debe ingresar exactamente 8 números."
                     required
                 >
+                <p class="modal__error" id="error-dni"></p>
+
+                <label class="modal__label">Paso 3: Elegí tu cartón</label>
+                <span class="modal__helper">Tocá uno de los siguientes cartones disponibles para seleccionarlo:</span>
+                
+                <div class="sugerencias-container" id="sugerencias-container" style="background:transparent; border:none; padding:10px 0; margin-bottom:10px;">
+                    <div class="sugerencias__grid" id="sugerencias-grid" style="max-height: 220px; overflow-y: auto; padding-right: 5px;">
+                        <span style="color:#94a3b8; font-size:0.85rem;">Buscando cartones libres...</span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="carton" required>
 
                 <button type="submit" class="btn btn--submit" id="btn-enviar">
-                    Confirmar y contactar por WhatsApp
+                    📱 Mandar pedido por WhatsApp
                 </button>
             </form>
         </div>
@@ -172,3 +145,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+
